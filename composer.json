@@ -1,0 +1,79 @@
+{
+    "name": "rushing/laravel-youtube-dl",
+    "description": "",
+    "type": "package",
+    "autoload": {
+        "psr-4": {
+            "Rushing\\YouTubeDl\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stephen Rushing"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "test": "./vendor/bin/pest --no-coverage",
+        "test-coverage": "vendor/bin/pest --coverage-html coverage",
+        "post-autoload-dump": [
+            "@clear",
+            "@prepare"
+        ],
+        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "prepare": "@php vendor/bin/testbench package:discover --ansi",
+        "build": "@php vendor/bin/testbench workbench:build --ansi",
+        "serve": [
+            "Composer\\Config::disableProcessTimeout",
+            "@build",
+            "@php vendor/bin/testbench serve --ansi"
+        ],
+        "lint": [
+            "@php vendor/bin/phpstan analyse --verbose --ansi"
+        ]
+    },
+    "require": {
+        "mantas-done/subtitles": "^1.0",
+        "norkunas/youtube-dl-php": "dev-master",
+        "spatie/laravel-data": "^4",
+        "spatie/laravel-package-tools": "^1.14.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^1.23",
+        "pestphp/pest-plugin-laravel": "^1.4",
+        "phpunit/phpunit": "^9.6"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../*/*",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rushing\\YouTubeDl\\ServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Workbench\\App\\": "workbench/app/",
+            "Workbench\\Database\\Factories\\": "workbench/database/factories/",
+            "Workbench\\Database\\Seeders\\": "workbench/database/seeders/"
+        }
+    }
+}
