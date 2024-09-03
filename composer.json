@@ -36,7 +36,6 @@
     "require": {
         "mantas-done/subtitles": "^1.0",
         "norkunas/youtube-dl-php": "dev-master",
-        "spatie/laravel-data": "^4",
         "spatie/laravel-package-tools": "^1.14.0"
     },
     "require-dev": {
