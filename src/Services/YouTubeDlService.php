@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use YoutubeDl\Entity\Video;
+use YoutubeDl\Entity\VideoCollection;
 use YoutubeDl\Options as DownloadOptions;
 use YoutubeDl\YoutubeDl;
 
@@ -71,7 +72,7 @@ class YouTubeDlService
     {
         $options = $this->getDownloadOptions($videoId);
         $dl = $this->dl->download($options);
-        $video = Arr::first($dl->getVideos())?->toJson();
+        $video = Arr::first($dl->getVideos());
         return $video;
     }
 
@@ -87,7 +88,7 @@ class YouTubeDlService
         $options->skipDownload(true);
 
         $dl = $this->dl->download($options);
-        $video = json_decode(Arr::first($dl->getVideos())?->toJson());
+        $video = Arr::first($dl->getVideos());
 
         // Cache::put("youtube-video-$videoId", $video, now()->addDays(30));
 
