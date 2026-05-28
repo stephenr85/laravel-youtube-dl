@@ -6,6 +6,7 @@ use Done\Subtitles\Subtitles;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use YoutubeDl\Entity\Video;
 use YoutubeDl\Entity\VideoCollection;
 use YoutubeDl\Options as DownloadOptions;
@@ -73,6 +74,8 @@ class YouTubeDlService
         $options = $this->getDownloadOptions($videoId);
         $dl = $this->dl->download($options);
         $video = Arr::first($dl->getVideos());
+        // output the video json to a file in its directory
+        File::put($this->getVideoStoragePath($videoId, "$videoId.json"), json_encode($video->toArray(), JSON_PRETTY_PRINT));
         return $video;
     }
 
@@ -89,7 +92,7 @@ class YouTubeDlService
 
         $dl = $this->dl->download($options);
         $video = Arr::first($dl->getVideos());
-
+        File::put($this->getVideoStoragePath($videoId, "$videoId.json"), json_encode($video->toArray(), JSON_PRETTY_PRINT));
         // Cache::put("youtube-video-$videoId", $video, now()->addDays(30));
 
         return $video;
